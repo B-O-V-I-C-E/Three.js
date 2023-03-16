@@ -3,7 +3,6 @@ import { Canvas, useThree, useFrame, useLoader } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 
 import css from "@/styles/Home.module.css";
-import Model from "@/comps/Model";
 import LoadModel from "@/comps/LoadModel";
 
 function Scene() {
@@ -59,13 +58,6 @@ function Scene() {
         roughness={.4}
         metalness={2}
       />
-
-      {/* Tower */}
-      {/* <LoadModel
-        object={'./Tower/scene.gltf'}
-        position={[0, -900, 0]}
-        scale={[5, 5, 5]}
-      /> */}
 
       <OrbitControls />
       <Environment preset="sunset" background />
