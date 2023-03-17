@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Group, MeshStandardMaterial, Vector3, Euler } from "three";
@@ -10,6 +10,9 @@ interface LoadModelProps {
   rotation?: Euler | number | number[];
   roughness?: number;
   metalness?: number;
+  autoRotate?: boolean;
+  rotateSpeed?: number;
+  onClick?: () => void;
 }
 
 const LoadModel = ({
@@ -19,6 +22,9 @@ const LoadModel = ({
   rotation = new Euler(),
   roughness = 0,
   metalness = 0,
+  autoRotate = false,
+  rotateSpeed = 0.5,
+  onClick,
 }: LoadModelProps) => {
   const gltf = useLoader(GLTFLoader, object);
 
@@ -35,12 +41,33 @@ const LoadModel = ({
     }
   });
 
+  const ref = useRef<THREE.Object3D>();
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    console.log(ref.current);
+  };
+
+  useEffect(() => {
+    if (autoRotate && ref.current) {
+      const id = setInterval(() => {
+        if (ref.current) {
+          ref.current.rotation.y += rotateSpeed * 0.01;
+        }
+      }, 16);
+  
+      return () => clearInterval(id);
+    }
+  }, [autoRotate, rotateSpeed]);
+
   return (
     <primitive
       object={sceneObject}
       scale={scale}
       position={position}
       rotation={rotation}
+      ref={ref}
+      onClick={handleClick}
     />
   );
 };

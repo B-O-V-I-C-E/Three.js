@@ -1,25 +1,26 @@
 import React, { Suspense } from "react";
-import { Canvas, useThree, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 
 import css from "@/styles/Home.module.css";
 import LoadModel from "@/comps/LoadModel";
 
 function Scene() {
-  const { camera } = useThree();
-
   // Create a useRender hook to animate the scene
   useFrame(() => {
     // Update the scene in each animation frame
   });
 
+  const handleLogObject = (obj: string) => {
+    console.log(obj);
+  };
   return (
     <>
       <ambientLight color={"#fff5df"} intensity={0} />
       <directionalLight
         color={"#ffd1af"}
-        intensity={.5}
-        position={[0, 0, 15]}
+        intensity={2}
+        position={[15, 0, 15]}
       />
 
       {/* Plant */}
@@ -29,6 +30,7 @@ function Scene() {
         scale={3}
         roughness={1}
         metalness={1}
+        onClick={() => handleLogObject("Plant")}
       />
 
       {/* Frog */}
@@ -39,6 +41,7 @@ function Scene() {
         roughness={1}
         metalness={1}
         rotation={[0, -1, 0]}
+        onClick={() => handleLogObject("Frog")}
       />
 
       {/* Brick Ball */}
@@ -48,6 +51,7 @@ function Scene() {
         scale={2}
         roughness={1}
         metalness={1}
+        onClick={() => handleLogObject("Brick Ball")}
       />
 
       {/* Metal Ball */}
@@ -57,6 +61,17 @@ function Scene() {
         scale={13}
         roughness={.4}
         metalness={2}
+        onClick={() => handleLogObject("Metal Ball")}
+      />
+
+      {/* PartA */}
+      <LoadModel
+        object={'./PartA/Part_A.gltf'} 
+        position={[0, -10, 0]} 
+        scale={13}
+        roughness={.4}
+        metalness={2}
+        onClick={() => handleLogObject("Metal Ball")}
       />
 
       <OrbitControls />
